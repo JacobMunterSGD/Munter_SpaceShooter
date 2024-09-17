@@ -15,29 +15,29 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey("up"))
         {
-            PlayerMovement(0, moveSpeed * Time.deltaTime);
+            PlayerMovement(0, moveSpeed);
         }
 
         if (Input.GetKey("down"))
         {
-            PlayerMovement(0, -moveSpeed * Time.deltaTime);
+            PlayerMovement(0, -moveSpeed);
         }
 
         if (Input.GetKey("right"))
         {
-            PlayerMovement(moveSpeed * Time.deltaTime, 0);
+            PlayerMovement(moveSpeed, 0);
         }
 
         if (Input.GetKey("left"))
         {
-            PlayerMovement(-moveSpeed * Time.deltaTime, 0);
+            PlayerMovement(-moveSpeed, 0);
         }
     }
 
     void PlayerMovement(float x, float y)
     {
         Vector3 velocity = new Vector3(x, y, 0);
-        transform.position += velocity;
+        transform.position += velocity * Time.deltaTime;
     }
 
 }
