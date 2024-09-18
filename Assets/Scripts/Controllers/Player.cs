@@ -56,7 +56,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            print("max speed reached");
+            //print("max speed reached");
         }
 
     }

@@ -8,13 +8,29 @@ public class Asteroid : MonoBehaviour
     public float arrivalDistance;
     public float maxFloatDistance;
 
-    // Start is called before the first frame update
+    Vector3 Target;
+    Vector3 direction;
+
     void Start()
     {
+        RandomPoint();
     }
 
-    // Update is called once per frame
     void Update()
     {
+        if (Vector3.Distance(transform.position, Target) < arrivalDistance)
+        {
+            RandomPoint();
+        }
+        else
+        {
+            transform.position += direction * moveSpeed * Time.deltaTime;
+        }
+    }
+
+    void RandomPoint()
+    {
+        Target = new Vector3(transform.position.x + Random.Range(-maxFloatDistance, maxFloatDistance), transform.position.y + Random.Range(-maxFloatDistance, maxFloatDistance), 0);
+        direction = Target - transform.position;
     }
 }
