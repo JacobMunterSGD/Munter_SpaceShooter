@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     Vector3 velocity = new Vector3(0, 0, 0);
 
     public float maxSpeed;
+    public float decelerationSpeed;
 
     void Update()
     {
@@ -37,7 +38,13 @@ public class Player : MonoBehaviour
             PlayerMovement(-moveSpeed, 0);
         }
 
+        if (!Input.anyKey)
+        {
+            PlayerDeceleration();
+        }
+
         transform.position += velocity * Time.deltaTime;
+        
     }
 
     void PlayerMovement(float x, float y)
@@ -52,7 +59,34 @@ public class Player : MonoBehaviour
             print("max speed reached");
         }
 
-        print(velocity.x + " " + velocity.y);
+    }
+
+    void PlayerDeceleration()
+    {
+        float xSpeed = 0;
+        float ySpeed = 0;
+
+        if (velocity.x < 0)
+            xSpeed = decelerationSpeed;
+        if (velocity.x > 0)
+            xSpeed = -decelerationSpeed;
+        if (velocity.y < 0)
+            ySpeed = decelerationSpeed;
+        if (velocity.y > 0)
+            ySpeed = -decelerationSpeed;
+
+        if (velocity.x + xSpeed > 0 || velocity.x + xSpeed < 0)
+        {
+            xSpeed -= velocity.x;
+        }
+        if (velocity.y + ySpeed > 0 || velocity.y + ySpeed < 0)
+        {
+            ySpeed -= velocity.y;
+        }
+
+        Vector3 slowByVector = new Vector3(xSpeed, ySpeed, 0);
+
+        velocity += slowByVector * Time.deltaTime;
     }
 
 }
