@@ -11,6 +11,10 @@ public class Player : MonoBehaviour
 
     public float moveSpeed;
 
+    Vector3 velocity = new Vector3(0, 0, 0);
+
+    public float maxSpeed;
+
     void Update()
     {
         if (Input.GetKey("up"))
@@ -32,12 +36,23 @@ public class Player : MonoBehaviour
         {
             PlayerMovement(-moveSpeed, 0);
         }
+
+        transform.position += velocity * Time.deltaTime;
     }
 
     void PlayerMovement(float x, float y)
     {
-        Vector3 velocity = new Vector3(x, y, 0);
-        transform.position += velocity * Time.deltaTime;
+        Vector3 acceleration = new Vector3(x, y, 0);
+        if ((velocity.x + acceleration.x * Time.deltaTime < maxSpeed) && (velocity.x + acceleration.x * Time.deltaTime > -maxSpeed) && (velocity.y + acceleration.y * Time.deltaTime < maxSpeed) && (velocity.y + acceleration.y * Time.deltaTime > -maxSpeed))
+        {
+            velocity += acceleration * Time.deltaTime;
+        }
+        else
+        {
+            print("max speed reached");
+        }
+
+        print(velocity.x + " " + velocity.y);
     }
 
 }
