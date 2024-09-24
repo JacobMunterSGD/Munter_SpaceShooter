@@ -33,13 +33,13 @@ public class Stars : MonoBehaviour
 
         Debug.DrawLine(starTransforms[starPosition - 1].position, drawTo);
 
-        print(drawTo);
+        //print(drawTo);
 
         if (drawTo - starTransforms[starPosition - 1].position == differenceBetweenPoints)
         {
             starPosition++;
             intervalPoint = 0;
-            print("true");
+            //print("true");
             if (starPosition > starTransforms.Count - 1)
                 starPosition = 1;
             differenceBetweenPoints = starTransforms[starPosition].position - starTransforms[starPosition - 1].position;
