@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LineToMouse : MonoBehaviour
 {
-
+    
     void Update()
     {
         Vector3 mouseScreenPos = Input.mousePosition;
