@@ -29,7 +29,6 @@ public class RotationTest : MonoBehaviour
             {
                 transform.Rotate(0, 0, angularSpeed * Time.deltaTime);
             }
-            
         }
     }
     public float StandardizeAngle(float inAngle)
