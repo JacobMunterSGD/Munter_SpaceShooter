@@ -10,6 +10,7 @@ public class Missile : MonoBehaviour
     public void Start()
     {
         velocity = Turret.currentMissileVelocity;
+        Destroy(gameObject, 15);
     }
 
     void Update()

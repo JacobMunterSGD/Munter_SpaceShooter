@@ -7,6 +7,8 @@ public class Turret : MonoBehaviour
     public float angularSpeed;
     public float targetAngle;
 
+    public float missileSpeed;
+
     public GameObject player;
 
     public GameObject missile;
@@ -49,14 +51,21 @@ public class Turret : MonoBehaviour
         if (timer >= 0)
         {
             timer -= Time.deltaTime;
+
+            if (Vector3.Normalize(missileSpawnPoint.transform.position - transform.position) == Vector3.Normalize(player.transform.position - transform.position))
+            {
+                Vector3 tempVelocity = missileSpawnPoint.transform.position - transform.position;
+                NewInstantiate(missile, missileSpawnPoint.transform, Vector3.Normalize(tempVelocity) * missileSpeed);
+                timer = timerStartValue;
+            }
         }
         else
         {
             timer = timerStartValue;
-            Vector3 tempVelocity = new Vector3(Mathf.Cos(missileSpawnPoint.transform.position.x - transform.position.x), Mathf.Sin(missileSpawnPoint.transform.position.y - transform.position.y), 0);
-            NewInstantiate(missile, missileSpawnPoint.transform, Vector3.Normalize(tempVelocity) * 5);
-        }
+            Vector3 tempVelocity = missileSpawnPoint.transform.position - transform.position;
+            NewInstantiate(missile, missileSpawnPoint.transform, Vector3.Normalize(tempVelocity) * missileSpeed);
 
+        }
 
     }
 
