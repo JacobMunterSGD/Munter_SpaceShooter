@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.TextCore.Text;
 using static UnityEngine.GraphicsBuffer;
 
 public class Player : MonoBehaviour
@@ -12,6 +13,9 @@ public class Player : MonoBehaviour
     public Transform bombsTransform;
 
     public GameObject powerup;
+    List<GameObject> powerUpList = new List<GameObject>();
+
+    public GameObject rotationPoint;
 
     public float moveSpeed;
 
@@ -52,10 +56,29 @@ public class Player : MonoBehaviour
             SpawnPowerups(4, 3);
         }
 
+        if (Input.GetKeyDown("o"))
+        {
+            detachPowerUps();
+        }
+
         transform.position += velocity * Time.deltaTime;
 
         EnemyRadar(2, 20);
 
+        rotatePowerUps();
+
+    }
+    void detachPowerUps()
+    {
+        foreach (GameObject g in powerUpList)
+        {
+            g.transform.parent = null;
+        }
+    }
+
+    void rotatePowerUps()
+    {
+        rotationPoint.transform.Rotate(0, 0, 50 * Time.deltaTime);
     }
 
     public void SpawnPowerups(float radius, int numberOfPowerups)
@@ -77,7 +100,11 @@ public class Player : MonoBehaviour
 
         foreach (Vector3 p in powerUpSpawnPoints)
         {
-            Instantiate(powerup, p, Quaternion.identity);
+
+            GameObject tempPowerUp = Instantiate(powerup, p, Quaternion.identity);
+            tempPowerUp.transform.SetParent(rotationPoint.transform);
+            powerUpList.Add(tempPowerUp);
+            
         }
 
     }

@@ -84,7 +84,7 @@ public class Turret : MonoBehaviour
     {
         Instantiate(gameObject, transform.position, Quaternion.identity);
         currentMissileVelocity = velocity;
-        print(currentMissileVelocity);
+        //print(currentMissileVelocity);
     }
 
 }
