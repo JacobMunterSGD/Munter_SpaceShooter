@@ -4,13 +4,18 @@ using System.Collections;
 public class Enemy : MonoBehaviour
 {
 
-    public GameObject player;
+    GameObject player;
 
     Vector3 velocity = Vector3.zero;
 
     public float speed;
 
     public float maxSpeed;
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+    }
 
     private void Update()
     {
