@@ -13,7 +13,10 @@ public class Player : MonoBehaviour
     public Transform bombsTransform;
 
     public GameObject powerup;
-    List<GameObject> powerUpList = new List<GameObject>();
+    //List<GameObject> powerUpList = new List<GameObject>();
+
+    List<PowerUp> powerUpList2 = new List<PowerUp>();
+    public float powerUpLaunchSpeed;
 
     public GameObject rotationPoint;
 
@@ -66,19 +69,46 @@ public class Player : MonoBehaviour
         EnemyRadar(2, 20);
 
         rotatePowerUps();
+        launchPowerUps();
 
     }
     void detachPowerUps()
     {
-        foreach (GameObject g in powerUpList)
+        //foreach (GameObject g in powerUpList)
+        //{
+        //    g.transform.parent = null;
+        //}
+
+        foreach (PowerUp p in powerUpList2)
         {
-            g.transform.parent = null;
+            p.GameObject.transform.parent = null;
+            p.direction = Vector3.Normalize(p.GameObject.transform.position - transform.position);
         }
     }
 
     void rotatePowerUps()
     {
         rotationPoint.transform.Rotate(0, 0, 50 * Time.deltaTime);
+    }
+
+    void launchPowerUps()
+    {
+        //foreach (GameObject g in powerUpList)
+        //{
+        //    if (g.transform.parent == null)
+        //    {
+        //        //g.transform.position = g.transform.position + Vector3.up;
+        //    }
+        //}
+        
+        foreach (PowerUp p in powerUpList2)
+        {
+            if (p.GameObject.transform.parent == null)
+            {
+                p.GameObject.transform.position = p.GameObject.transform.position + p.direction * Time.deltaTime * powerUpLaunchSpeed;
+            }
+        }
+
     }
 
     public void SpawnPowerups(float radius, int numberOfPowerups)
@@ -103,7 +133,11 @@ public class Player : MonoBehaviour
 
             GameObject tempPowerUp = Instantiate(powerup, p, Quaternion.identity);
             tempPowerUp.transform.SetParent(rotationPoint.transform);
-            powerUpList.Add(tempPowerUp);
+
+            PowerUp tempPowerUp2 = new PowerUp(tempPowerUp, Vector3.zero);
+
+            //powerUpList.Add(tempPowerUp);
+            powerUpList2.Add(tempPowerUp2);
             
         }
 
@@ -195,4 +229,17 @@ public class Player : MonoBehaviour
         velocity += slowByVector * Time.deltaTime;
     }
 
+}
+
+public class PowerUp
+{
+
+    public GameObject GameObject;
+    public Vector3 direction;
+
+    public PowerUp(GameObject tempGameObject, Vector3 tempDirection)
+    {
+        GameObject = tempGameObject;
+        direction = tempDirection;
+    }
 }
